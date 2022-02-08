@@ -57,7 +57,6 @@ app.get('/press', async (req, res, next) => {
             <header>Bridgette Gan, Soprano</header>
             <section>
                 <div>
-                    <h1>Singer | Actress | Educator</h1>
                     <div id='nav'><nav>
                         <ul>
                             <li><a href='/home'>Home</a></li>
@@ -120,7 +119,6 @@ app.get('/quotes/:id', async (req, res, next) => {
             <header><a href='/'>Bridgette Gan, Soprano</a></header>
             <section>
                 <div>
-                    <h1>Singer | Actress | Educator</h1>
                     <div id='nav'><nav>
                         <ul>
                             <li><a href='/home'>Home</a></li>
