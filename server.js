@@ -2,7 +2,7 @@ const express = require('express');
 const volleyball = require('volleyball');
 const client = require('./db.js');
 const app = express();
-app.use(express(volleyball));
+app.use(volleyball);
 app.use(express.static(__dirname + '/public'));
 const port = process.env.PORT || 3000;
 
