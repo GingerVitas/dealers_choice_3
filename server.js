@@ -2,24 +2,42 @@ const express = require('express');
 const volleyball = require('volleyball');
 const client = require('./db.js');
 const app = express();
+const seed = require('./seed.js');
+const path = require('path');
 app.use(volleyball);
 app.use(express.static(__dirname + '/public'));
-const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}.`)
-})
+
+const setup = async () => {
+   try{
+    await client.connect();
+    console.log('Connected to db');
+    await client.query(seed());
+    console.log('Database has been seeded')
+
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Listening on port ${port}.`)
+    })
+   }
+   catch(e) {
+       console.log(e)
+   }
+}
+
+setup();
+
 
 app.get('/home', (req, res, next) => {
     try {
-        res.sendFile('public/index.html', {root: __dirname});
+        res.sendFile(path.join(__dirname, '.', 'public', 'index.html',));
     }
     catch(e) {next(e)}
 })
 
 app.get('/photos', (req, res, next) => {
     try {
-        res.sendFile('public/photos.html', {root:__dirname});
+        res.sendFile(path.join(__dirname, '.', 'public', 'photos.html',));
     }
     catch(e) {next(e)}
 })
@@ -57,6 +75,7 @@ app.get('/press', async (req, res, next) => {
             <header>Bridgette Gan, Soprano</header>
             <section>
                 <div>
+                <h1>Singer | Actress | Educator</h1>
                     <div id='nav'><nav>
                         <ul>
                             <li><a href='/home'>Home</a></li>
@@ -101,7 +120,7 @@ app.get('/quotes/:id', async (req, res, next) => {
         const quote = data.rows[0]
         const fullQuote = `
         <p>
-            <h2><span class='quoteHeader'>${quote.company} - ${quote.production}</h2>
+            <h2><span class='quoteHeader'><a href='/press'>${quote.company} - ${quote.production}</a></h2>
             <blockquote>${quote.content}</blockquote>
             <small>${quote.author}, ${quote.publication}</small>
         </p>
