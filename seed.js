@@ -1,9 +1,11 @@
-module.exports = () => ` 
+module.exports = () => 
+` 
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS production;
 DROP TABLE IF EXISTS author;
 DROP TABLE IF EXISTS publication;
 DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS contacts;
 
 CREATE TABLE companies (
     id SERIAL PRIMARY KEY,
@@ -34,6 +36,13 @@ CREATE TABLE reviews (
     author_id INTEGER REFERENCES author(id),
     publication_id INTEGER REFERENCES publication(id),
     production_id INTEGER REFERENCES production(id)
+);
+
+CREATE TABLE contacts (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL
 );
 
 INSERT INTO companies (name) VALUES ('Utah Festival Opera');
